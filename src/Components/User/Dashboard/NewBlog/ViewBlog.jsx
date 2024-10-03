@@ -63,7 +63,7 @@ function ViewBlog() {
                   <div className="mt-3">
                     <p className="text-xs sm:text-base">name :{item?.name}</p>
                     <p className="text-xs sm:text-base">
-                      category :{item?.categoriesInfo?.name}
+                      category :{item?.name}
                     </p>
                     <p className="text-xs sm:text-base">
                       Description : {item?.description}

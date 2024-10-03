@@ -17,10 +17,10 @@ function CreateBlog() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchAPI();
+    fetchCategories();
   }, []);
 
-  const fetchAPI = async () => {
+  const fetchCategories = async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/categories", {
         headers: {
@@ -33,82 +33,92 @@ function CreateBlog() {
     }
   };
 
-  const addBlog = async (e) => {
+  const handleBlogSubmit = async (e, isDraft) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:3000/api/blogs",
-        { image, name, description, dropdown },
+        { image, name, description, dropdown, isDraft },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}` },
         }
       );
 
-      successToast("Blog Added Successfully");
-      navigate("/user/blogs");
+      const successMessage = isDraft ? "Blog Saved to Draft Successfully" : "Blog Added Successfully";
+      successToast(successMessage);
+      navigate(isDraft ? "/user/drafts" : "/user/blogs");
     } catch (error) {
       errorToast(error.message);
     }
   };
 
+
   return (
-    <>
-      <div className="py-5">
-        <form
-          onSubmit={addBlog}
-          className="m-auto w-[260px] sm:w-[450px] p-5 rounded-2xl border border-slate-800 shadow-md shadow-slate-800"
-        >
-          <p className="text-base sm:text-lg mt-3 p-3 text-center">Add Blog</p>
+    <div className="py-5">
+      <form
+        onSubmit={(e) => handleBlogSubmit(e, false)}
+        className="m-auto w-[260px] sm:w-[450px] p-5 rounded-2xl border border-slate-800 shadow-md shadow-slate-800"
+      >
+        <p className="text-base sm:text-lg mt-3 p-3 text-center">Add Blog</p>
 
-          <p className="font-thin text-slate-800">Set an Image</p>
-          <div className="flex justify-center items-center sm:ml-0 ml-2 ">
-            <img
-              src={image}
-              alt="loading..."
-              className="bg-slate-100 w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] rounded-lg m-2"
-            />
-            <FileBase64 onDone={(res) => setImage(res.base64)} />
-          </div>
+        <p className="font-thin text-slate-800">Set an Image</p>
+        <div className="flex justify-center items-center sm:ml-0 ml-2">
+          <img
+            src={image}
+            alt="loading..."
+            className="bg-slate-100 w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] rounded-lg m-2"
+          />
+          <FileBase64 onDone={(res) => setImage(res.base64)} />
+        </div>
 
-          <div className="flex flex-col w-[200px] gap-3 m-auto mt-3">
-            <select
-              className="text-slate-800"
-              onChange={(e) => setDropdown(e.target.value)}
-            >
-              <option>Select Category</option>
-              {categories.map((item) => (
-                <option key={item._id} value={item._id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
+        <div className="flex flex-col w-[200px] gap-3 m-auto mt-3">
+          <select
+            className="text-slate-800"
+            onChange={(e) => setDropdown(e.target.value)}
+            required
+          >
+            <option>Select Category</option>
+            {categories.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
 
-            <input
-              type="text"
-              value={name}
-              placeholder="Name"
-              onChange={(e) => setName(e.target.value)}
+          <input
+            type="text"
+            value={name}
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
+            className="outline outline-1 text-xs sm:text-base rounded px-2"
+            required
+          />
+
+          <div className="mt-3">
+            <p className="font-thin text-slate-800">Description</p>
+            <MDEditor
+              value={description}
+              onChange={setDescription}
               className="outline outline-1 text-xs sm:text-base rounded px-2"
-            />
-
-            <div className="mt-3">
-              <p className="font-thin text-slate-800">Description</p>
-              <MDEditor
-                value={description}
-                onChange={setDescription}
-                className="outline outline-1 text-xs sm:text-base rounded px-2"
-              />
-            </div>
-
-            <input
-              type="submit"
-              value="Upload"
-              className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3"
+              required
             />
           </div>
-        </form>
-      </div>
-    </>
+
+          <input
+            type="submit"
+            value="Upload"
+            className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3"
+          />
+        </div>
+      </form>
+
+      <button
+        onClick={(e) => handleBlogSubmit(e, true)}
+        className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3"
+      >
+        Save as Draft
+      </button>
+    </div>
   );
 }
 

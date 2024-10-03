@@ -81,7 +81,7 @@ function Dropdown() {
               </p>
             </Link>
 
-            <Link to={''}
+            <Link to={'drafts'}
               className="block px-4 py-2 text-sm text-slate-800 hover:bg-gray-100"
             >
               <p className='flex gap-1 sm:gap-2'>
