@@ -35,6 +35,8 @@ import CreateBlog from './Components/User/Dashboard/NewBlog/CreateBlog'
 import UserDraft from './Components/User/Dashboard/Draft/UserDraft'
 import UserManagement from './Components/Admin/Dashboard/AllUsers/UserManagement'
 import UserBlogsManagement from './Components/Admin/Dashboard/AllUsers/UserBlogsManagement'
+import Published from './Components/User/Dashboard/Published/Published'
+import AllDrafts from './Components/Admin/Dashboard/Drafts/AllDrafts'
 
 function App() {
   const router = createBrowserRouter ([
@@ -73,6 +75,10 @@ function App() {
           element: <UserDraft/>
         },
         {
+          path: "published",
+          element: <Published/>
+        },
+        {
           path: "categoriesname/:page",
           element: <CategoriesLayout/>
         },
@@ -95,6 +101,14 @@ function App() {
             {
               path: "add-blog",
               element: <CreateBlog/>
+            },
+            {
+              path: "drafts",
+              element: <UserDraft/>
+            },
+            {
+              path: "published",
+              element: <Published/>
             }
           ]
         },
@@ -174,6 +188,10 @@ function App() {
           ]
         },
         {
+          path: "all-drafts",
+          element: <AllDrafts/>
+        },
+        {
           path: "all-users",
           element: <UserManagement/>
         },
@@ -205,7 +223,7 @@ function App() {
       element: <AdminSignIn/>
     },
     {
-      path: "dropdown",
+      path: "multi-dropdown",
       element: <MultipleDropdown/>
     }
   ])

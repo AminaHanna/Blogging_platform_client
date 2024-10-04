@@ -90,6 +90,15 @@ function Dropdown() {
               </p>
             </Link>
 
+            <Link to={'published'}
+              className="block px-4 py-2 text-sm text-slate-800 hover:bg-gray-100"
+            >
+              <p className='flex gap-1 sm:gap-2'>
+                <span><i class="fa-solid fa-cart-shopping"></i></span>
+                <span> Published</span>
+              </p>
+            </Link>
+
             <Link to={'like'}
               className="block px-4 py-2 text-sm text-slate-800 hover:bg-gray-100"
             >

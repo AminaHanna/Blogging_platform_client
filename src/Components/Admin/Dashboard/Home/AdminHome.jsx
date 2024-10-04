@@ -1,9 +1,10 @@
 import React from 'react'
+import Blogs from '../../../Public/Blogs/Blogs'
 
 function AdminHome() {
   return (
     <>
-    <h1>Admin Home Page</h1>
+    <Blogs/>
     </>
   )
 }

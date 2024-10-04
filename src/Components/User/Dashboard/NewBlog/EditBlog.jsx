@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import FileBase64 from "react-file-base64"
 import { errorToast, successToast } from '../../../ExternalComponents/toast/toast';
+import MultipleDropdown from '../../../ExternalComponents/MultipleDropdown/MultipleDropdown';
 
 function EditBlog() {
     const [image,setImage] = useState([]);
@@ -97,6 +98,7 @@ function EditBlog() {
                 }
                 </select>
 
+                <MultipleDropdown/>
                 <input type="text" placeholder='name' value={name} onChange={(e)=>setName(e.target.value)} className='outline outline-1 text-xs sm:text-base rounded px-2' />
                 <input type="text" placeholder='description' value={description} onChange={(e)=>setDescription(e.target.value)} className='outline outline-1 text-xs sm:text-base rounded px-2' />
                 <input type="submit" value="submit"  className='text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white'/>

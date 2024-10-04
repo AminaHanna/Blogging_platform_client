@@ -6,13 +6,17 @@ import { errorToast, successToast } from "../../../ExternalComponents/toast/toas
 import MDEditor from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
+import { Card } from "@mui/material";
+import MultipleDropdown from "../../../ExternalComponents/MultipleDropdown/MultipleDropdown";
 
 function CreateBlog() {
   const [categories, setCategories] = useState([]);
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
+  const [date,setDate] = useState('');
   const [description, setDescription] = useState("");
   const [dropdown, setDropdown] = useState("");
+  const [isPreview, setIsPreview] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,78 +50,127 @@ function CreateBlog() {
 
       const successMessage = isDraft ? "Blog Saved to Draft Successfully" : "Blog Added Successfully";
       successToast(successMessage);
-      navigate(isDraft ? "/user/drafts" : "/user/blogs");
+      navigate(isDraft ? "/user/drafts" : "/user/published");
     } catch (error) {
       errorToast(error.message);
     }
   };
 
+  const togglePreview = () => {
+    setIsPreview(!isPreview);
+  };
 
   return (
     <div className="py-5">
-      <form
-        onSubmit={(e) => handleBlogSubmit(e, false)}
-        className="m-auto w-[260px] sm:w-[450px] p-5 rounded-2xl border border-slate-800 shadow-md shadow-slate-800"
-      >
-        <p className="text-base sm:text-lg mt-3 p-3 text-center">Add Blog</p>
+      {!isPreview ? 
+      (
+        <form
+          onSubmit={(e) => handleBlogSubmit(e, false)}
+          className="m-auto w-[260px] sm:w-[450px] p-5 rounded-2xl border border-slate-800 shadow-md shadow-slate-800"
+        >
+          <p className="text-base sm:text-lg mt-3 p-3 text-center">Add Blog</p>
 
-        <p className="font-thin text-slate-800">Set an Image</p>
-        <div className="flex justify-center items-center sm:ml-0 ml-2">
-          <img
-            src={image}
-            alt="loading..."
-            className="bg-slate-100 w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] rounded-lg m-2"
-          />
-          <FileBase64 onDone={(res) => setImage(res.base64)} />
-        </div>
+          <p className="font-thin text-slate-800">Set an Image</p>
+          <div className="flex justify-center items-center sm:ml-0 ml-2">
+            <img
+              src={image}
+              alt="loading..."
+              className="bg-slate-100 w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] rounded-lg m-2"
+            />
+            <FileBase64 onDone={(res) => setImage(res.base64)} />
+          </div>
 
-        <div className="flex flex-col w-[200px] gap-3 m-auto mt-3">
-          <select
-            className="text-slate-800"
-            onChange={(e) => setDropdown(e.target.value)}
-            required
-          >
-            <option>Select Category</option>
-            {categories.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
+          <div className="flex flex-col w-[200px] gap-3 m-auto mt-3">
+            <select
+              className="text-slate-800"
+              onChange={(e) => setDropdown(e.target.value)}
+              required
+            >
+              <option>Select Category</option>
+              {categories.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
 
-          <input
-            type="text"
-            value={name}
-            placeholder="Name"
-            onChange={(e) => setName(e.target.value)}
-            className="outline outline-1 text-xs sm:text-base rounded px-2"
-            required
-          />
+            <MultipleDropdown/>
 
-          <div className="mt-3">
-            <p className="font-thin text-slate-800">Description</p>
-            <MDEditor
-              value={description}
-              onChange={setDescription}
+            {/* <input type='datetime-local' placeholder='date' name='date' value={date}  onChange={(e)=>setDate(e.target.value)} className='outline outline-1 text-xs sm:text-base rounded  px-2' /> */}
+
+            <input
+              type="text"
+              value={name}
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
               className="outline outline-1 text-xs sm:text-base rounded px-2"
               required
             />
-          </div>
 
-          <input
-            type="submit"
-            value="Upload"
-            className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3"
-          />
+            <div className="mt-3">
+              <p className="font-thin text-slate-800">Description</p>
+              <MDEditor
+                value={description}
+                onChange={setDescription}
+                className="outline outline-1 text-xs sm:text-base rounded px-2"
+                required
+              />
+            </div>
+
+            <input
+              type="submit"
+              value="Upload"
+              className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3"
+            />
+          </div>
+        </form>
+      ) : 
+      
+      // blog_preview
+      (
+        <div className="m-auto w-[260px] sm:w-[450px] p-5 rounded-2xl border border-slate-800 shadow-md shadow-slate-800">
+          <p className="text-base sm:text-lg mt-3 p-3 text-center">Preview Blog</p>
+          <div className="m-5">
+              <Card className='w-[350px] h-[450px]'>
+                <div className="flex flex-col">
+
+                  <div className="w-fit h-[235px]">
+                      <img className='h-[230px] w-[350px] bg-slate-300' src={image} alt="Loading..." />
+                  </div>
+
+                  <div className="h-[110px] px-3">
+                    <p className='py-1'>{name}</p>
+                    <p>{categories.find(cat => cat._id === dropdown)?.name}</p>
+                    <p>{description}</p>
+                  </div>
+
+                </div>
+              </Card>
+            </div>
+        
+          <button
+            onClick={(e) => handleBlogSubmit(e, false)}
+            className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3 px-5 mx-5"
+          >
+            Publish
+          </button>
         </div>
-      </form>
+      )}
 
       <button
-        onClick={(e) => handleBlogSubmit(e, true)}
-        className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3"
+        onClick={togglePreview}
+        className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3 px-5 mx-10"
       >
-        Save as Draft
+        {isPreview ? "Back to Edit" : "Preview"}
       </button>
+      {!isPreview && (
+        <button
+          onClick={(e) => handleBlogSubmit(e, true)}
+          className="text-slate-800 border-slate-800 border text-xs sm:text-base hover:bg-slate-800 hover:text-white mt-3 px-5"
+        >
+          Save as Draft
+        </button>
+      )}
     </div>
   );
 }

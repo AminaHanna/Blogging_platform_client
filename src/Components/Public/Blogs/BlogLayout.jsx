@@ -13,12 +13,12 @@ function BlogLayout() {
   return (
     <>
       <div className="">
-        <div className="m-auto w-[1000px] my-10">
-            <div className="flex">
+        <div className="m-auto sm:w-[1000px] my-10">
+            <div className="flex flex-wrap">
 
-                <div className="w-fit h-[235px]">
+                <div className="w-[400px]">
                 <img
-                    className="h-[400px] w-[400px] rounded-lg"
+                    className="h-[400px] sm:w-[400px] rounded-lg"
                     src={item.image}
                     alt="Loading..."
                 />
@@ -33,9 +33,9 @@ function BlogLayout() {
                         </div>
                     </div>
 
-                    <div className="h-[250px] p-5">
-                        <p className="font-bold pb-2 text-xl">{item.name}</p>
-                        <p>{item.description}</p>
+                    <div className="h-[250px] w-[300px] sm:w-[500px] p-5 break-words">
+                        <p className="font-bold pb-2 text-xl break-words">{item.name}</p>
+                        <p className="break-words">{item.description}</p>
                     </div>
 
                     <div className="flex gap-5 p-2">

@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 
 function Blog() {
     const [data,setData] = useState([])
-    // const {refresh,setRefresh} = React.useContext(ContextAPI);
-
 
     useEffect(()=>{
       fetchdata()
@@ -53,8 +51,8 @@ function Blog() {
                   </div>
 
                   <div className="h-[110px] px-3">
-                    <p className='py-1'>{item.name}</p>
-                    <p>{item.description}</p>
+                    <p className='py-1 break-words'>{item.name}</p>
+                    <p className='break-words'>{item.description}</p>
                   </div>
 
                   <div className="flex gap-3 p-2">

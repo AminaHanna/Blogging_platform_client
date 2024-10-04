@@ -27,7 +27,7 @@ function Left() {
         <NavLink to={'blogs'}>
             <button className='text-xs sm:text-base px-5 py-3 w-full text-start text-slate-900 hover:bg-slate-800 hover:text-white'>Blogs</button>
         </NavLink>
-        <NavLink to={''}>
+        <NavLink to={'all-drafts'}>
             <button className='text-xs sm:text-base px-5 py-3 w-full text-start text-slate-900 hover:bg-slate-800 hover:text-white'>Drafts</button>
         </NavLink>
         <NavLink to={'all-users'}>

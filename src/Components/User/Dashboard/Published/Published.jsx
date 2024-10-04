@@ -1,32 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios"
-import { errorToast, successToast } from "../../../ExternalComponents/toast/toast"
-import { Card } from "@mui/material";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { errorToast, successToast } from '../../../ExternalComponents/toast/toast';
+import { Link } from 'react-router-dom';
+import { Card } from '@mui/material';
 
-function BlogView() {
-  const [blogs, setBlogs] = useState([]);
-  const [refresh, setRefresh] = useState(true);
+function Published() {
+    const [published, setPublished] = useState([]);
 
   useEffect(() => {
-    fetchAPI();
-  }, [refresh]);
+    fetchPost();
+  }, []);
 
-  const fetchAPI = async (e) => {
+  const fetchPost = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/blogs/post-draft-users", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("userToken")} `,
-        },
+      const response = await axios.get("http://localhost:3000/api/blogs/published", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}` },
       });
-      console.log(response, "res");
-
-      setBlogs(response.data.blogs);
+      setPublished(response.data.blogs);
     } catch (error) {
-      setBlogs([]);
       errorToast(error.message);
     }
   };
+
 
   const handleDelete = async (id) => {
     try {
@@ -34,7 +29,7 @@ function BlogView() {
         `http://localhost:3000/api/blogs/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("adminToken")} `,
+            Authorization: `Bearer ${localStorage.getItem("userToken")} `,
           },
         }
       );
@@ -46,11 +41,13 @@ function BlogView() {
     }
   };
 
+
   return (
     <>
-      <div className="flex flex-wrap justify-center items-center">
-        {blogs.map((item, index) => {
+    <div className="flex flex-wrap justify-center items-center">
+        {published.map((item, index) => {
           return (
+            <>
             <Card key={index} className="bg-slate-100 w-[400px] m-3">
               <div className="m-5">
                 <div className="flex justify-center">
@@ -71,6 +68,11 @@ function BlogView() {
               </div>
 
               <div className="flex justify-center gap-3">
+                <Link to={`/user/blogs/edit-blog/${item?._id}`} state={item}>
+                  <button className="border border-slate-800 px-3 py-1 my-2 hover:bg-slate-800 hover:text-white text-xs sm:text-base">
+                    Edit
+                  </button>
+                </Link>
                 <button
                   onClick={() => handleDelete(item?._id)}
                   className="border border-slate-800 px-3 py-1 my-2 hover:bg-slate-800 hover:text-white text-xs sm:text-base"
@@ -79,11 +81,12 @@ function BlogView() {
                 </button>
               </div>
             </Card>
+            </>
           );
         })}
-      </div>
+    </div>
     </>
-  );
+  )
 }
 
-export default BlogView;
+export default Published

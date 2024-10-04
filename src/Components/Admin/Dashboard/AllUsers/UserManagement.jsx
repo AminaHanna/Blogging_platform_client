@@ -40,7 +40,7 @@ function UserManagement() {
                             <p className='text-xs sm:text-base font-semibold'>{item.userEmail}</p>
                             <p className='text-xs text-slate-600'>created At : </p>
                             <p className='text-xs text-slate-600'>{item.createdAt}</p>
-                            <Link to={`/admin/userblogs/${item._id}`}>
+                            <Link to={`/admin/userblogs/${item._id}`} state={item}>
                                <button className="border border-slate-800 px-3 my-2 mx-7 hover:bg-slate-800 hover:text-white text-xs sm:text-base">Check</button>
                             </Link>
                         </div>
