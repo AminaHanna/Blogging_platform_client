@@ -47,7 +47,7 @@ function CategoriesLayout() {
                   <img className="h-full w-full" src={item.image} alt="Loading..." />
                 </div>
                 <div className="p-2 sm:h-[110px] flex justify-center items-center">
-                  <p className="text-xs sm:text-xl font-bold">{item.name}</p>
+                <div className="text-xs sm:text-base break-words" dangerouslySetInnerHTML={{ __html: item?.name }} />
                 </div>
               </Link>
             </Card>

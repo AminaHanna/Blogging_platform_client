@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 function UserManagement() {
     const [users,setUsers] = useState([]);
+    const [userCount, setUserCount] = useState(0);
 
     useEffect(()=>{
       fetchUsers()
@@ -19,7 +20,8 @@ function UserManagement() {
             },
           })
          console.log(response,"responseee");    
-        setUsers(response.data.users)      
+        setUsers(response.data.users);
+        setUserCount(response.data.count);
       } catch (error) {
         errorToast(error.message || 'error')
       }
@@ -28,6 +30,7 @@ function UserManagement() {
   return (
     <>
     <div className="">
+    <h2 className="text-center text-xl font-semibold">Total Users: {userCount}</h2>
         <div className="flex flex-wrap justify-center gap-5 m-5">
             {
                 users.map((item)=>{
@@ -39,10 +42,11 @@ function UserManagement() {
                             <p className='text-xs sm:text-base font-semibold'>{item.userFname} {item.userLname}</p>
                             <p className='text-xs sm:text-base font-semibold'>{item.userEmail}</p>
                             <p className='text-xs text-slate-600'>created At : </p>
-                            <p className='text-xs text-slate-600'>{item.createdAt}</p>
-                            <Link to={`/admin/userblogs/${item._id}`} state={item}>
+                            {/* <p className='text-xs text-slate-600'>{item.createdAt}</p> */}
+                            <p className='text-xs text-slate-600'>{new Date(item.createdAt).toLocaleDateString()}</p>
+                            {/* <Link to={`/admin/userblogs/${item._id}`} state={item}>
                                <button className="border border-slate-800 px-3 my-2 mx-7 hover:bg-slate-800 hover:text-white text-xs sm:text-base">Check</button>
-                            </Link>
+                            </Link> */}
                         </div>
                         </>
                     )

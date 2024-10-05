@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { errorToast, successToast } from "../../../ExternalComponents/toast/toast";
-import { Link } from "react-router-dom";
-import { Card } from "@mui/material";
+import { Avatar, Card } from "@mui/material";
+import ReactMarkdown from "react-markdown";
 
 function AllDrafts() {
   const [drafts, setDrafts] = useState([]);
@@ -41,6 +41,11 @@ function AllDrafts() {
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB'); // This will format the date to "dd-MM-yyyy"
+  };
+
   return (
     <>
     <div className="flex flex-wrap justify-center items-center">
@@ -56,10 +61,17 @@ function AllDrafts() {
 
               <div className="m-5">
                 <div className="">
-                  <p className="text-xs sm:text-base break-words">name: {item?.name}</p>
-                  <p className="text-xs sm:text-base break-words">
-                    Description: {item?.description}
-                  </p>
+                <div className="flex gap-5">
+                    <Avatar src={item?.userInfo?.profile} />
+                    <div className="">
+                      <p>{item?.userInfo?.userFname} {item?.userInfo?.userLname}</p>
+                      <p>{formatDate(item?.date)}</p>
+                    </div>
+                  </div>
+                  <div className="text-xs sm:text-base break-words" dangerouslySetInnerHTML={{ __html: item?.name }} />
+                  <ReactMarkdown className="text-xs sm:text-base break-words">
+                    {item?.description}
+                  </ReactMarkdown>
                   <p className="text-xs sm:text-base break-words">
                     Categories: {item?.categoriesInfo?.name}
                   </p>

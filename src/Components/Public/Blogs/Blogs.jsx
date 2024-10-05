@@ -89,11 +89,7 @@ const formatDate = (dateString) => {
                       {item.userInfo.userFname[0]} {/* Fallback to the first letter of the user's name */}
                     </Avatar>
                   }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
+                  
                   title={fullName}
                   subheader={formatDate(item.date)}
                 />
@@ -108,7 +104,7 @@ const formatDate = (dateString) => {
                 </Link>
                 <CardContent>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  <p className='py-1 break-words font-semibold'>{item.name}</p>
+                  <div className="text-xs sm:text-base break-words" dangerouslySetInnerHTML={{ __html: item?.name }} />
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -129,13 +125,12 @@ const formatDate = (dateString) => {
                 </CardActions>
                 <Collapse in={isExpanded} timeout="auto" unmountOnExit>
                   <CardContent>
-                    <Typography sx={{ marginBottom: 2 }}>About:</Typography>
                     <Typography sx={{ marginBottom: 2 }}>
                       <ReactMarkdown className="break-words">
                         {item.description}
                       </ReactMarkdown>
                     </Typography>
-                    <Typography>category:{item.categoriesInfo.name}</Typography>
+                    <Typography>{item.categoriesInfo.name}</Typography>
                   </CardContent>
                 </Collapse>
               </Card>
@@ -151,7 +146,7 @@ const formatDate = (dateString) => {
           count={totalPages}
           page={currentPage}
           onChange={handlePageChange}
-          color="standard"
+          // color="standard"
           // color="primary"
         />
       </div>

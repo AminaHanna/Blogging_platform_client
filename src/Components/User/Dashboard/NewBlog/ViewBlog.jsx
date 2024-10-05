@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { errorToast, successToast } from "../../../ExternalComponents/toast/toast";
 import { Card } from "@mui/material";
+import ReactMarkdown from "react-markdown";
+import EmptyBlog from "./EmptyBlog";
 
 function ViewBlog() {
   const [blogs, setBlogs] = useState([]);
@@ -48,6 +50,10 @@ function ViewBlog() {
 
   return (
     <>
+    {
+      blogs.length === 0 ?
+      <EmptyBlog/> :
+    
       <div className="flex flex-wrap justify-center items-center">
         {blogs.map((item, index) => {
           return (
@@ -60,12 +66,15 @@ function ViewBlog() {
 
               <div className="m-5">
                 <div className="">
-                  <p className="text-xs sm:text-base break-words">name: {item?.name}</p>
-                  <p className="text-xs sm:text-base break-words">
-                    Description: {item?.description}
-                  </p>
+                  <div className="text-xs sm:text-base break-words" dangerouslySetInnerHTML={{ __html: item?.name }} />
+                  <ReactMarkdown className="break-words">
+                    {item?.description}
+                  </ReactMarkdown>
                   <p className="text-xs sm:text-base break-words">
                     Categories: {item?.categoriesInfo.name}
+                  </p>
+                  <p className={`text-xs sm:text-base break-words ${item?.isDraft ? 'text-red-500' : 'text-green-500'}`}>
+                    Status: {item?.isDraft ? "Draft" : "Published"}
                   </p>
                 </div>
               </div>
@@ -87,6 +96,8 @@ function ViewBlog() {
           );
         })}
       </div>
+
+      }
     </>
   );
 }

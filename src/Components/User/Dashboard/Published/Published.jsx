@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { errorToast, successToast } from '../../../ExternalComponents/toast/toast';
 import { Link } from 'react-router-dom';
 import { Card } from '@mui/material';
+import ReactMarkdown from "react-markdown";
+import EmptyBlog from '../NewBlog/EmptyBlog';
 
 function Published() {
     const [published, setPublished] = useState([]);
@@ -33,8 +35,7 @@ function Published() {
           },
         }
       );
-
-      setRefresh(!refresh);
+      fetchPost(); //for refresh automatically after deletion
       successToast("Deleted Succesfully");
     } catch (error) {
       errorToast(error.message);
@@ -44,6 +45,10 @@ function Published() {
 
   return (
     <>
+    {
+      published.length === 0 ?
+      <EmptyBlog/> :
+    
     <div className="flex flex-wrap justify-center items-center">
         {published.map((item, index) => {
           return (
@@ -57,10 +62,10 @@ function Published() {
 
               <div className="m-5">
                 <div className="">
-                  <p className="text-xs sm:text-base break-words">name: {item?.name}</p>
-                  <p className="text-xs sm:text-base break-words">
-                    Description: {item?.description}
-                  </p>
+                  <div className="text-xs sm:text-base break-words" dangerouslySetInnerHTML={{ __html: item?.name }} />
+                  <ReactMarkdown className="break-words">
+                    {item?.description}
+                  </ReactMarkdown>
                   <p className="text-xs sm:text-base break-words">
                     Categories: {item?.categoriesInfo?.name}
                   </p>
@@ -85,6 +90,8 @@ function Published() {
           );
         })}
     </div>
+
+    }
     </>
   )
 }

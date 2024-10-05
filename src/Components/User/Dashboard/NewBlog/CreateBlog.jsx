@@ -8,6 +8,10 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import { Card } from "@mui/material";
 import MultipleDropdown from "../../../ExternalComponents/MultipleDropdown/MultipleDropdown";
+import ReactMarkdown from "react-markdown";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 function CreateBlog() {
   const [categories, setCategories] = useState([]);
@@ -98,14 +102,24 @@ function CreateBlog() {
 
             {/* <input type='datetime-local' placeholder='date' name='date' value={date}  onChange={(e)=>setDate(e.target.value)} className='outline outline-1 text-xs sm:text-base rounded  px-2' /> */}
 
-            <input
+            {/* <input
               type="text"
               value={name}
               placeholder="Name"
               onChange={(e) => setName(e.target.value)}
               className="outline outline-1 text-xs sm:text-base rounded px-2"
               required
-            />
+            /> */}
+
+            <div className="mt-3">
+              <p className="font-thin text-slate-800">Post Name</p>
+              <ReactQuill 
+                value={name}
+                onChange={setName}
+                className="outline outline-1 text-xs sm:text-base rounded px-2"
+                required
+              />
+            </div>
 
             <div className="mt-3">
               <p className="font-thin text-slate-800">Description</p>
@@ -139,9 +153,13 @@ function CreateBlog() {
                   </div>
 
                   <div className="h-[110px] px-3">
-                    <p className='py-1'>{name}</p>
+                    {/* Render the React Quill HTML content */}
+                  <div className='py-1 break-words' dangerouslySetInnerHTML={{ __html: name }} />
+                    {/* <p className='py-1 break-words'>{name}</p> */}
                     <p>{categories.find(cat => cat._id === dropdown)?.name}</p>
-                    <p>{description}</p>
+                    <ReactMarkdown className="break-words">
+                      {description}
+                    </ReactMarkdown>
                   </div>
 
                 </div>
