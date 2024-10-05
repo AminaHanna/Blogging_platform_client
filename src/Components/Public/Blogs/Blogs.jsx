@@ -83,7 +83,7 @@ const formatDate = (dateString) => {
           return (
             <div key={index} className="m-5">
               <Card sx={{ width: 345 }}>
-                <CardHeader
+                <CardHeader className="h-20"
                   avatar={
                     <Avatar src={item?.userInfo?.profile} >
                       {item.userInfo.userFname[0]} {/* Fallback to the first letter of the user's name */}
@@ -94,7 +94,7 @@ const formatDate = (dateString) => {
                   subheader={formatDate(item.date)}
                 />
                 <Link to={`/blogs/${item._id}`} state={item} >
-                <CardMedia
+                <CardMedia className="h-[200px]"
                   sx={{maxHeight: 200}}
                   component="img"
                   height="194"
@@ -102,7 +102,7 @@ const formatDate = (dateString) => {
                   alt="Loading..."
                 />
                 </Link>
-                <CardContent>
+                <CardContent className="h-24">
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   <div className="text-xs sm:text-base break-words" dangerouslySetInnerHTML={{ __html: item?.name }} />
                   </Typography>
@@ -130,7 +130,11 @@ const formatDate = (dateString) => {
                         {item.description}
                       </ReactMarkdown>
                     </Typography>
-                    <Typography>{item.categoriesInfo.name}</Typography>
+                    <Typography >
+                      <button className="border border-slate-800 rounded-full px-5">
+                      {item.categoriesInfo.name}
+                      </button>
+                      </Typography>
                   </CardContent>
                 </Collapse>
               </Card>
@@ -138,10 +142,7 @@ const formatDate = (dateString) => {
           );
         })}
       </div>
-      {/* <div className="flex justify-center">
-        <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} />
-      </div> */}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center my-4">
         <Pagination
           count={totalPages}
           page={currentPage}

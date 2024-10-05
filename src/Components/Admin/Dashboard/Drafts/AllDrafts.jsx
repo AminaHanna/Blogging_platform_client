@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import { errorToast, successToast } from "../../../ExternalComponents/toast/toast";
 import { Avatar, Card } from "@mui/material";
 import ReactMarkdown from "react-markdown";
+import { ContextApi } from "../../../ExternalComponents/ContextAPI/Context";
 
 function AllDrafts() {
   const [drafts, setDrafts] = useState([]);
-  const [refresh, setRefresh] = useState(true);
+  // const [refresh, setRefresh] = useState(true);
+  const {refresh, setRefresh} = React.useContext(ContextApi);
+
 
   useEffect(() => {
     fetchDrafts();
-  }, []);
+  }, [refresh]);
 
   const fetchDrafts = async () => {
     try {

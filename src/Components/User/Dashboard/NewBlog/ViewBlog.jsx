@@ -5,10 +5,12 @@ import { errorToast, successToast } from "../../../ExternalComponents/toast/toas
 import { Card } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import EmptyBlog from "./EmptyBlog";
+import { ContextApi } from "../../../ExternalComponents/ContextAPI/Context";
 
 function ViewBlog() {
   const [blogs, setBlogs] = useState([]);
-  const [refresh, setRefresh] = useState(true);
+  // const [refresh, setRefresh] = useState(true);
+  const {refresh, setRefresh} = React.useContext(ContextApi);
 
   useEffect(() => {
     fetchAPI();

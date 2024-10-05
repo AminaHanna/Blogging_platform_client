@@ -85,7 +85,7 @@ function Dropdown() {
               className="block px-4 py-2 text-sm text-slate-800 hover:bg-gray-100"
             >
               <p className='flex gap-1 sm:gap-2'>
-                <span><i class="fa-solid fa-cart-shopping"></i></span>
+                <span><i class="fa-solid fa-trash"></i></span>
                 <span> Drafts</span>
               </p>
             </Link>
@@ -94,28 +94,28 @@ function Dropdown() {
               className="block px-4 py-2 text-sm text-slate-800 hover:bg-gray-100"
             >
               <p className='flex gap-1 sm:gap-2'>
-                <span><i class="fa-solid fa-cart-shopping"></i></span>
+                <span><i class="fa-solid fa-upload"></i></span>
                 <span> Published</span>
               </p>
             </Link>
 
-            <Link to={'like'}
+            {/* <Link to={'like'}
               className="block px-4 py-2 text-sm text-slate-800 hover:bg-gray-100"
             >
               <p className='flex gap-1 sm:gap-2'>
                 <span><i class="fa-solid fa-heart"></i></span>
                 <span> Likes </span>
               </p>
-            </Link>
+            </Link> */}
 
-            <Link to={'cmt'}
+            {/* <Link to={'cmt'}
               className="block px-4 py-2 text-sm text-slate-800 hover:bg-gray-100"
             >
               <p className='flex gap-1 sm:gap-2'>
                 <span><i class="fa-solid fa-comment"></i></span>
                 <span> Comments </span>
               </p>
-            </Link>
+            </Link> */}
 
             <Link onClick={logout}
               className="block px-4 py-2 text-sm text-white bg-slate-800 hover:bg-gray-100 hover:text-slate-800"

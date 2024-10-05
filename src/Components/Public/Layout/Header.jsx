@@ -49,10 +49,10 @@ function Header() {
                 <h1 className='sm:text-2xl'>•ᗷℓ𝐎ģǤ𝕀ᑎ𝓰•</h1>
             </div>
         </a>
-        <div className="text-white flex gap-5">
+        {/* <div className="text-white flex gap-5">
           <Link to="/admin">Admin</Link>
           <Link to="/user">User</Link>
-        </div>
+        </div> */}
 
          {/* ------searchbar start------ */}
          <div className="flex items-center mb-4 sm:mb-0 relative">

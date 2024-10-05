@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 import { Card } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import EmptyBlog from "../NewBlog/EmptyBlog";
+import { ContextApi } from "../../../ExternalComponents/ContextAPI/Context";
 
 function UserDraft() {
   const [drafts, setDrafts] = useState([]);
+  const {refresh, setRefresh} = React.useContext(ContextApi);
 
   useEffect(() => {
     fetchDrafts();
-  }, []);
+  }, [refresh]);
 
   const fetchDrafts = async () => {
     try {
@@ -31,7 +33,8 @@ function UserDraft() {
           Authorization: `Bearer ${localStorage.getItem("userToken")} `,
         },
       });
-      setDrafts(drafts.filter((draft) => draft._id !== id));
+      setRefresh(!refresh)
+      // setDrafts(drafts.filter((draft) => draft._id !== id));
       successToast("Deleted Successfully");
     } catch (error) {
       errorToast(error.message);
@@ -45,7 +48,8 @@ function UserDraft() {
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
       });
-      setDrafts(drafts.filter((draft) => draft._id !== id));
+      setRefresh(!refresh)
+      // setDrafts(drafts.filter((draft) => draft._id !== id));
       successToast("Published Successfully");
     } catch (error) {
       errorToast(error.message);

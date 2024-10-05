@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom';
 import { Card } from '@mui/material';
 import ReactMarkdown from "react-markdown";
 import EmptyBlog from '../NewBlog/EmptyBlog';
+import { ContextApi } from '../../../ExternalComponents/ContextAPI/Context';
 
 function Published() {
     const [published, setPublished] = useState([]);
+    const {refresh, setRefresh} = React.useContext(ContextApi);
+
 
   useEffect(() => {
     fetchPost();
-  }, []);
+  }, [refresh]);
 
   const fetchPost = async () => {
     try {
@@ -35,7 +38,8 @@ function Published() {
           },
         }
       );
-      fetchPost(); //for refresh automatically after deletion
+      // fetchPost(); //for refresh automatically after deletion
+      setRefresh(!refresh);
       successToast("Deleted Succesfully");
     } catch (error) {
       errorToast(error.message);

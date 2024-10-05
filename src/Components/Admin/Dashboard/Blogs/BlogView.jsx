@@ -4,10 +4,13 @@ import axios from "axios"
 import { errorToast, successToast } from "../../../ExternalComponents/toast/toast"
 import { Avatar, Card } from "@mui/material";
 import ReactMarkdown from "react-markdown";
+import { ContextApi } from "../../../ExternalComponents/ContextAPI/Context";
 
 function BlogView() {
   const [blogs, setBlogs] = useState([]);
-  const [refresh, setRefresh] = useState(true);
+  // const [refresh, setRefresh] = useState(true);
+  const {refresh, setRefresh} = React.useContext(ContextApi);
+  
 
   useEffect(() => {
     fetchAPI();
@@ -81,7 +84,7 @@ function BlogView() {
                   <p className="text-xs sm:text-base break-words">
                     Categories: {item?.categoriesInfo?.name}
                   </p>
-                  <p className="text-xs sm:text-base break-words">
+                  <p className={`text-xs sm:text-base break-words ${item?.isDraft ? 'text-red-500' : 'text-green-500'}`}>
                     Status: {item?.isDraft ? "Draft" : "Published"}
                   </p>
                 </div>
